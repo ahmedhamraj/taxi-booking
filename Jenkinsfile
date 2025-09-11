@@ -27,7 +27,7 @@ pipeline {
                         tomcat9(
                             credentialsId: 'tomcat-credentials',
                             path: '',
-                            url: 'http://172.31.19.242:8080/'
+                            url: 'http://54.167.87.118:8080/'
                         )
                     ],
                     contextPath: 'taxibooking',
