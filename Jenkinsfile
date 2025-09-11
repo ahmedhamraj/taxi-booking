@@ -1,38 +1,22 @@
 pipeline {
     agent any
 
-    stages {
+        stages {
         stage('Checkout') {
             steps {
-                checkout scmGit(
-                    branches: [[name: '*/dev']],
-                    extensions: [],
-                    userRemoteConfigs: [[url: 'https://github.com/ahmedhamraj/taxi-booking.git']]
-                )
+                git branch: 'dev',
+                    url: 'https://github.com/ahmedhamraj/spring-petclinic.git'
             }
         }
 
         stage('Build') {
             steps {
-                dir('taxi-booking') {
-                    sh 'mvn clean package'
-                }
+                sh 'mvn clean package -DskipTests -U'
             }
-        }
-
+        }       
         stage('Deploy to Tomcat') {
             steps {
-                dir('taxi-booking') {
-                    deploy adapters: [
-                        tomcat9(
-                            credentialsId: 'tomcat-credentials',
-                            path: '',
-                            url: 'http://54.167.87.118:8080/'
-                        )
-                    ],
-                    contextPath: 'taxibooking',
-                    war: 'target/taxi-booking-1.0.1.war'
-                }
+                   sh 'scp /home/ubuntu/.jenkins/workspace/scriptedpipeline/taxi-booking/target/taxi-booking-1.0.1.war ubuntu@172.31.19.242:/var/lib/tomcat9/webapps/taxi-booking.jar'
             }
         }
     }
