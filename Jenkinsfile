@@ -16,7 +16,7 @@ pipeline {
         }       
         stage('Deploy to Tomcat') {
             steps {
-                   sh 'scp /home/ubuntu/.jenkins/workspace/scriptedpipeline/taxi-booking/target/taxi-booking-1.0.1.war ubuntu@172.31.19.242:/var/lib/tomcat9//taxi-booking.jar'
+                   sh 'scp /home/ubuntu/.jenkins/workspace/scriptedpipeline/taxi-booking/target/taxi-booking-1.0.1.war ubuntu@172.31.19.242:/var/lib/tomcat9/webapps/taxi-booking.jar'
             }
         }
     }
